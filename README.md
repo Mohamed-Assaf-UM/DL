@@ -840,3 +840,556 @@ The **activation function** determines how signals are passed through neurons an
 
 ### **Conclusion**
 The vanishing gradient problem can hinder the training of deep networks, especially with activation functions like sigmoid or tanh. Choosing better activation functions, initializing weights carefully, and designing architectures like ResNet can address this issue effectively.
+
+---
+### **Sigmoid Activation Function**
+
+The **sigmoid activation function** is one of the most commonly used activation functions in neural networks, particularly in earlier architectures. It maps any input value to a value between **0** and **1**, which makes it ideal for problems where outputs need to be interpreted as probabilities.
+
+---
+
+### **Mathematical Definition**
+![image](https://github.com/user-attachments/assets/756929bc-e85f-42c0-a803-4bd15b5fdd59)
+
+
+---
+
+### **Characteristics**
+![image](https://github.com/user-attachments/assets/b6442525-55c9-4b47-818e-467af2d7329a)
+
+
+---
+
+### **Advantages**
+1. **Probabilistic Interpretation**:  
+   Outputs can be interpreted as probabilities, which is particularly useful in binary classification tasks (e.g., logistic regression).
+
+2. **Smooth Function**:  
+   The function is continuous and differentiable, making it suitable for gradient-based optimization methods.
+
+3. **Bounded Output**:  
+   The function squashes the input values into a range, preventing extreme outputs.
+
+---
+
+### **Disadvantages**
+![image](https://github.com/user-attachments/assets/fde6302f-deca-4184-b9c5-e943ec35bda9)
+
+
+---
+
+### **Visualization**
+
+![image](https://github.com/user-attachments/assets/d12161fd-aa31-491a-b53b-081983299260)
+
+---
+
+### **Example Usage in Neural Networks**
+
+#### **Binary Classification Problem**
+![image](https://github.com/user-attachments/assets/17f0f50f-88d2-499e-8c31-24e6d4e12b93)
+
+---
+
+### **Derivative and Backpropagation**
+![image](https://github.com/user-attachments/assets/b423a5d8-cef6-4ce5-aea3-03648ad7308e)
+
+---
+
+### **Real-Life Analogy**
+![image](https://github.com/user-attachments/assets/d3096be8-ee52-4dec-b4d3-231bb051e727)
+
+---
+
+### **Code Implementation**
+
+Here’s how you can implement the sigmoid function in Python:
+
+```python
+import numpy as np
+
+# Sigmoid function
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+# Example usage
+z = np.array([-10, -1, 0, 1, 10])  # Input values
+output = sigmoid(z)
+print("Sigmoid Output:", output)
+```
+
+**Output**:
+![image](https://github.com/user-attachments/assets/94eb256f-12c2-4000-b11d-a66fbf060ca8)
+
+
+This demonstrates how sigmoid compresses input values into the range \((0, 1)\).
+
+---
+
+### **Conclusion**
+The sigmoid function is a simple and effective activation function for small neural networks and binary classification. However, its limitations (vanishing gradients and non-zero-centered output) make it less suitable for deeper networks, where ReLU or other functions are preferred.
+
+---
+### **Tanh (Hyperbolic Tangent) Activation Function**
+
+The **Tanh activation function** is another popular activation function in neural networks. It maps input values to a range between **-1** and **1**, which makes it zero-centered and often more efficient than the sigmoid function for some tasks.
+
+---
+
+### **Mathematical Definition**
+![image](https://github.com/user-attachments/assets/6905f06c-5209-4da9-b91f-f76506b8828f)
+
+
+---
+
+### **Characteristics**
+1. **Output Range**: \((-1, 1)\)  
+  ![image](https://github.com/user-attachments/assets/025915c6-d60a-4e50-8edc-d93d7383bbd0)
+
+
+2. **Zero-Centered**:  
+   - Unlike sigmoid, the outputs are centered around 0. This helps in faster convergence during training as gradients are more balanced.
+
+3. **S-Shaped Curve**:  
+   - The Tanh function has an "S" shape similar to sigmoid but extends into negative values.
+
+4. **Derivative**:
+ ![image](https://github.com/user-attachments/assets/f188b0f5-ea6e-457f-afc5-b0a9b7b2d91a)
+
+   - This derivative is used during backpropagation.
+
+---
+
+### **Advantages**
+1. **Zero-Centered Output**:  
+   - This makes weight updates during training more balanced, which improves optimization.
+
+2. **Smooth Gradient**:  
+   - The function is continuous and differentiable, making it suitable for gradient-based optimization.
+
+3. **Wide Output Range**:  
+   - Outputs between \((-1, 1)\) can better capture the relationship between features compared to sigmoid.
+
+---
+
+### **Disadvantages**
+1. **Vanishing Gradient Problem**:  
+   - For very large or very small values of \( z \), the gradient becomes close to 0, leading to slow learning in deep networks.
+
+2. **Computational Cost**:  
+   - Like sigmoid, Tanh requires exponential computations, which can be computationally expensive.
+
+---
+
+### **Visualization**
+![image](https://github.com/user-attachments/assets/a16076ca-3c2a-4565-b445-954146dc3647)
+
+---
+
+### **Example Usage in Neural Networks**
+
+#### **Sentiment Analysis**
+Imagine a neural network is trained to predict the sentiment of a review:
+- **Input**: Word embeddings representing the review text.  
+- **Output Layer Activation**: Tanh.  
+  ![image](https://github.com/user-attachments/assets/d29744b4-2820-4bab-aac6-048d97d69785)
+
+---
+
+### **Steps**:
+![image](https://github.com/user-attachments/assets/5ebe50d1-9985-4156-8de8-da768b3adbd3)
+
+---
+
+### **Derivative and Backpropagation**
+![image](https://github.com/user-attachments/assets/44c6c332-bba1-4128-8b11-1a67efbb9cfb)
+
+---
+
+### **Comparison with Sigmoid**
+
+| **Feature**              | **Sigmoid**          | **Tanh**            |
+|--------------------------|----------------------|---------------------|
+| **Output Range**         | ( (0, 1) )          | ( (-1, 1) )       |
+| **Zero-Centered Output** | No                  | Yes                |
+| **Gradient Saturation**  | Yes                 | Yes                |
+| **Usage**                | Probabilistic tasks | Hidden layers of neural networks |
+
+---
+
+### **Code Implementation**
+
+Here’s how you can implement the Tanh function in Python:
+
+```python
+import numpy as np
+
+# Tanh function
+def tanh(z):
+    return np.tanh(z)
+
+# Derivative of tanh
+def tanh_derivative(z):
+    return 1 - np.tanh(z)**2
+
+# Example usage
+z = np.array([-10, -1, 0, 1, 10])  # Input values
+output = tanh(z)
+gradient = tanh_derivative(z)
+
+print("Tanh Output:", output)
+print("Tanh Gradient:", gradient)
+```
+
+**Output**:
+![image](https://github.com/user-attachments/assets/be346188-27df-48af-9c6a-6d25ca119129)
+
+
+---
+
+### **Real-Life Analogy**
+![image](https://github.com/user-attachments/assets/cab4161b-1dc1-49f5-b4f0-3ff4e4c3d0d6)
+
+---
+
+### **Conclusion**
+The Tanh function is a powerful activation function for hidden layers, especially when zero-centered outputs are needed. However, due to the vanishing gradient problem, its usage has declined in favor of ReLU and its variants for deeper networks.
+
+---
+
+### **ReLU (Rectified Linear Unit) Activation Function**
+
+The **ReLU activation function** is one of the most widely used activation functions in deep learning, especially in the hidden layers of neural networks. It is simple, computationally efficient, and helps to mitigate the vanishing gradient problem that often affects sigmoid and tanh functions.
+
+---
+
+### **Mathematical Definition**
+![image](https://github.com/user-attachments/assets/71feb42c-fb61-433f-a885-8c8384cb00dd)
+
+
+---
+
+### **Characteristics**
+![image](https://github.com/user-attachments/assets/cc9d316c-cd3e-41f6-b9db-d6bafa2a19e0)
+
+
+---
+
+### **Advantages**
+1. **Efficient Computation**:  
+   - ReLU requires minimal computation compared to sigmoid or tanh, as it involves only a comparison and multiplication.
+
+2. **Sparse Activation**:  
+   - For many inputs, ReLU outputs 0, leading to sparsity in the network. Sparse activations reduce the computational load and can improve generalization.
+
+3. **Mitigates Vanishing Gradient Problem**:  
+   - For z > 0 , the gradient is always 1, ensuring that gradients do not vanish during backpropagation.
+
+4. **Simple Implementation**:  
+   - ReLU is straightforward to implement in any programming language or framework.
+
+---
+
+### **Disadvantages**
+1. **Dying ReLU Problem**:  
+   - If a neuron's input  z  becomes negative, its output is always 0, and the gradient is also 0. This can cause neurons to "die" during training, never updating their weights.
+
+2. **Unbounded Output**:  
+   - The output can grow infinitely large, which may lead to exploding gradients in some cases.
+
+---
+
+### **Visualization**
+
+![image](https://github.com/user-attachments/assets/81091731-407d-491b-a592-ba71ec7847fb)
+
+---
+
+### **Example Usage in Neural Networks**
+
+#### **Image Classification**
+Consider a convolutional neural network (CNN) for image classification:
+- **Input**: Pixel values from the image.  
+- **Hidden Layers**: Apply ReLU as the activation function after convolution operations.  
+   - Negative pixel values or small activations are set to 0.
+   - Positive activations are passed forward.  
+- **Output Layer**: A different activation (e.g., softmax) is used to classify the image.
+
+ReLU helps to retain only meaningful features, improving the network's ability to learn important patterns in the data.
+
+---
+
+### **Code Implementation**
+
+Here’s how ReLU works in Python:
+
+```python
+import numpy as np
+
+# ReLU function
+def relu(z):
+    return np.maximum(0, z)
+
+# Derivative of ReLU
+def relu_derivative(z):
+    return np.where(z > 0, 1, 0)
+
+# Example usage
+z = np.array([-2, -1, 0, 1, 2])  # Input values
+output = relu(z)
+gradient = relu_derivative(z)
+
+print("ReLU Output:", output)
+print("ReLU Gradient:", gradient)
+```
+
+**Output**:
+![image](https://github.com/user-attachments/assets/57ebc1d5-4af7-4d11-81e7-cc7deb5d5427)
+
+
+---
+
+### **Real-Life Analogy**
+Think of ReLU as a water tap:
+- If the tap is closed (negative input), no water flows (output = 0).  
+- If the tap is open (positive input), water flows freely (output = input value).  
+This selective passing of information ensures the network focuses only on significant signals.
+
+---
+
+### **Handling the Dying ReLU Problem**
+To address the dying ReLU problem, modified versions of ReLU have been introduced:
+1. **Leaky ReLU**:  
+  ![image](https://github.com/user-attachments/assets/07863b33-c89d-4b9b-a9d7-a2d2570c4cad)
+
+2. **Parametric ReLU (PReLU)**:  
+   - Similar to Leaky ReLU, but \( \alpha \) is learned during training.
+
+3. **Exponential Linear Unit (ELU)**:  
+   - Smooths the transition for negative values.
+
+---
+
+### **Comparison with Other Activation Functions**
+
+| **Feature**               | **Sigmoid**        | **Tanh**          | **ReLU**        |
+|---------------------------|--------------------|-------------------|-----------------|
+| **Output Range**          | (0,1)              | (−1,1)            | [0,∞)          |
+| **Gradient Saturation**   | Yes               | Yes              | No              |
+| **Computational Cost**    | High              | High             | Low             |
+| **Sparse Activation**     | No                | No               | Yes             |
+| **Dying Neurons**         | No                | No               | Yes (can be mitigated) |
+
+---
+
+### **Conclusion**
+ReLU is a powerful and widely used activation function due to its simplicity, efficiency, and ability to address the vanishing gradient problem. However, it is not without challenges, such as the dying ReLU problem, which can often be mitigated with its variants like Leaky ReLU. Its widespread adoption has made it a cornerstone of modern deep learning architectures.
+
+---
+### **Leaky ReLU and Parametric ReLU (PReLU)**
+
+Leaky ReLU and Parametric ReLU are modified versions of the ReLU activation function designed to address the **dying ReLU problem**, where some neurons get stuck with an output of 0 and never update during training.
+
+---
+
+### **Leaky ReLU**
+
+Leaky ReLU introduces a small, non-zero slope for negative input values instead of setting them to zero, as in ReLU. This ensures that neurons can still learn even when the input is negative.
+
+#### **Mathematical Definition**
+![image](https://github.com/user-attachments/assets/cacb78ff-3f21-46f8-b11d-2138e3ddae90)
+
+
+![image](https://github.com/user-attachments/assets/73766202-e683-4f5f-ac81-ec6166f1b41d)
+
+---
+
+### **Advantages**
+- **No Dying Neurons**: Neurons can still update weights even for negative inputs.
+- **Simple Modification**: Easy to implement by introducing a small slope.
+
+#### **Disadvantage**
+- The slope for negative inputs (𝛼) is fixed and may not be optimal for all datasets.
+
+---
+
+### **Parametric ReLU (PReLU)**
+
+PReLU is a generalization of Leaky ReLU where the slope for negative inputs (\( \alpha \)) is not fixed but learned during training. This allows the model to adaptively adjust the slope based on the data.
+
+![image](https://github.com/user-attachments/assets/a24b6255-fe01-41d6-883c-41e8a0490649)
+
+![image](https://github.com/user-attachments/assets/1d9f5ab1-0447-4239-8f56-bcccf05ab804)
+
+---
+
+### **Advantages**
+- **Learnable Slope**: PReLU can adapt better to complex data distributions.
+- **Improved Performance**: Often leads to better results compared to ReLU or Leaky ReLU.
+
+#### **Disadvantage**
+- **Overfitting Risk**: The increased number of parameters (\( \alpha \)) can lead to overfitting if not properly regularized.
+
+---
+
+### **Visualization**
+
+#### **ReLU, Leaky ReLU, and PReLU**
+1. **ReLU**: Negative inputs are clipped to 0.
+2. **Leaky ReLU**: Negative inputs have a fixed small slope.
+3. **PReLU**: Negative inputs have a learnable slope.
+
+```plaintext
+    |
+    |           /
+    |         /
+    |       /
+----|-----/------------------> z
+    |   /
+    |  / Leaky ReLU or PReLU for z ≤ 0
+    | /
+```
+
+---
+
+### **Python Implementation**
+
+```python
+import numpy as np
+
+# Leaky ReLU function
+def leaky_relu(z, alpha=0.01):
+    return np.where(z > 0, z, alpha * z)
+
+# Parametric ReLU function
+def parametric_relu(z, alpha):
+    return np.where(z > 0, z, alpha * z)
+
+# Example usage
+z = np.array([-3, -1, 0, 1, 3])
+
+# Leaky ReLU
+output_leaky = leaky_relu(z)
+print("Leaky ReLU Output:", output_leaky)
+
+# Parametric ReLU with learnable alpha
+alpha = 0.1  # Example learnable parameter
+output_prelu = parametric_relu(z, alpha)
+print("Parametric ReLU Output:", output_prelu)
+```
+
+**Output**:
+![image](https://github.com/user-attachments/assets/953ef9d6-8d4c-4c62-a107-0de2e67f6535)
+
+---
+
+### **Real-Life Example**
+#### **Image Classification**
+- **Leaky ReLU**: Ensures that features from darker parts of an image (negative pixel values) are not completely ignored but scaled down slightly. This improves learning in edge cases.
+- **PReLU**: Adapts during training to handle varying contrasts in images, such as bright vs. dim areas, making the network more robust.
+
+---
+
+### **Comparison**
+
+![image](https://github.com/user-attachments/assets/d89c1ebf-cab3-43cf-86b5-f68eebb4e196)
+
+---
+
+### **Conclusion**
+- **Leaky ReLU** solves the dying neuron problem by introducing a small fixed slope for negative values.
+- **PReLU** goes a step further by making this slope learnable, offering greater flexibility and adaptability.
+Both functions have proven highly effective in modern deep learning applications, especially in networks with many layers.
+
+---
+
+### **Exponential Linear Unit (ELU)**
+
+The Exponential Linear Unit (ELU) is an activation function designed to improve learning performance by addressing some limitations of ReLU, such as the dying ReLU problem and the vanishing gradient issue for negative inputs. ELU provides smoother gradients and allows the model to converge faster by incorporating exponential terms.
+
+---
+
+### **Mathematical Definition**
+
+![image](https://github.com/user-attachments/assets/eada7ae7-4c80-4ff5-93ec-8fddca4826dd)
+
+---
+
+### **Characteristics**
+
+![image](https://github.com/user-attachments/assets/6a3713ee-89bf-4595-9d48-8db1f5274c15)
+
+---
+
+### **Advantages**
+
+1. **No Dead Neurons**:
+   Unlike ReLU, ELU has non-zero outputs for negative \( z \), ensuring neurons remain active during training.
+
+2. **Smoother Gradients**:
+   The exponential term makes the function differentiable everywhere, improving gradient flow during backpropagation.
+
+3. **Faster Convergence**:
+   ELU’s negative saturation helps center activations around zero, reducing the bias shift and speeding up learning.
+
+---
+
+### **Disadvantages**
+
+1. **Computational Cost**:
+   The exponential calculation makes ELU slightly more expensive than ReLU and Leaky ReLU.
+
+2. **Hyperparameter α**:
+   Requires tuning, as the value of α can impact performance.
+
+---
+
+### **Visualization**
+
+```plaintext
+    |
+  1 |           /
+    |         /
+  0 |-------/------------------> z
+    |     /
+ -α |____/
+    |
+```
+
+- For 𝑧>0, the function is linear.
+- For 𝑧≤0, it exponentially decays to a minimum value of −α.
+
+---
+
+### **Real-Life Example**
+
+#### **Image Recognition**
+In deep convolutional networks used for image classification (e.g., identifying cats vs. dogs), ELU prevents saturation for large negative pixel values (e.g., darker image regions), allowing better feature learning.
+
+---
+
+### **Python Implementation**
+
+```python
+import numpy as np
+
+def elu(z, alpha=1.0):
+    return np.where(z > 0, z, alpha * (np.exp(z) - 1))
+
+# Example usage
+z = np.array([-3, -1, 0, 1, 3])
+output = elu(z)
+print("ELU Output:", output)
+```
+
+![image](https://github.com/user-attachments/assets/138d3da3-6d66-484a-b9ba-8113c9f26762)
+
+---
+
+### **Conclusion**
+
+ELU is a powerful activation function that addresses key issues of ReLU and its variants:
+- It avoids dead neurons by allowing small negative outputs.
+- The smoother nature of ELU enhances gradient flow during backpropagation.
+- Though computationally heavier, it is widely used in deep learning tasks requiring fast convergence and robust gradient updates.
+
