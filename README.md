@@ -1847,3 +1847,55 @@ Imagine you’re cooking a dish and want to get the perfect taste (global minimu
 - Gradient Descent works well but requires significant resources for large datasets.
 
 ---
+### What is Gradient Descent?
+
+Before diving into **Stochastic Gradient Descent (SGD)**, let's quickly review **Gradient Descent**. 
+
+**Gradient Descent** is an optimization algorithm used in machine learning and deep learning to minimize the loss function (the error of our predictions). It helps the model adjust its weights to make better predictions. In **gradient descent**, you calculate the average gradient (direction of change) for all the data points at once, and update the model's weights accordingly. But this approach can be **resource-intensive** when you have a lot of data, as you need to process the entire dataset at once.
+
+### What is Stochastic Gradient Descent (SGD)?
+
+Now, **Stochastic Gradient Descent (SGD)** addresses the resource-intensity problem. Instead of using all the data at once, SGD uses **only one data point at a time** to update the weights. Here's a simple breakdown:
+
+1. **Epoch**: One complete pass through the entire dataset.
+2. **Iteration**: A single update step where you use one data point.
+   
+So, in **SGD**, for every **epoch**, instead of using all the 1000 data points (or more), you go through them one by one. In each **iteration**, you take one data point, calculate the error (loss), and update the model weights. This process repeats for all data points in the dataset, completing the epoch.
+
+### Real-Life Example to Understand SGD
+
+Imagine you're a teacher grading 1000 students' exams. In **Gradient Descent**, you would grade all the 1000 exams (data points) and calculate the overall average score (loss), and based on that, you adjust your grading system (weights).
+
+But in **Stochastic Gradient Descent (SGD)**, instead of grading all 1000 exams at once, you grade each exam individually. After each exam, you adjust your grading system based on that student's score. You continue this process for each student, updating your grading system after every exam.
+
+This helps if you don't have a lot of resources or time, as you're only working with one student's exam at a time.
+
+### Advantages of SGD
+
+1. **Resource Efficiency**: Since you’re processing one data point at a time, you don't need large amounts of RAM or processing power. Even if you have limited resources (e.g., 4GB or 8GB of RAM), you can still train the model.
+2. **Faster Weight Updates**: The model updates weights more frequently, which means it can adapt quickly and might reach a good solution faster.
+
+### Disadvantages of SGD
+
+1. **Time Complexity**: Since you’re processing one data point at a time, **SGD** takes more time, especially if you have a lot of data (like millions of data points). For example, if you have 1 million data points and 100 epochs, SGD will perform 100 million iterations.
+   
+   **Real-life analogy**: If you're grading 1 million students' exams one by one, it will obviously take more time compared to grading all exams together at once.
+
+2. **Convergence Issues**: SGD doesn't always converge smoothly to the global minimum (the best solution). Due to the single data point processing, the weight updates are **noisy**—they jump around a bit before they settle into the global minimum.
+
+   **Real-life analogy**: Imagine you're adjusting your grading system based on each student's exam. Sometimes, one student's score might mislead you into thinking the grading system needs a big change, but later, you realize that wasn’t necessary. The process might get a little bit "noisy" because you are updating the grading system based on individual students' exams.
+
+3. **Noise in the Process**: Since each iteration involves just one data point, the updates can be very noisy and might cause the model to fluctuate, taking a longer time to reach the best solution.
+
+   **Real-life analogy**: If you're trying to build a perfect grading system but keep adjusting it after each exam, your system might get constantly disturbed by individual exam results, making it harder to finalize the best system.
+
+### Conclusion
+
+- **Stochastic Gradient Descent (SGD)** is an optimization technique that updates the weights of a model using one data point at a time. It helps save resources (memory) but can increase **time complexity** and introduce **noise** in the learning process.
+- Despite the noise and time issues, it can still be quite useful, especially when you have limited computing resources or a large dataset.
+  
+The key takeaway is that **SGD** is a resource-efficient method for training models, but it has some trade-offs, such as slower convergence and the introduction of noise in the process.
+
+In the next step, the video also talks about how to improve **SGD** by introducing **Mini-batch SGD**, which helps reduce noise and balances the advantages and disadvantages of pure SGD.
+
+---
