@@ -1899,3 +1899,389 @@ The key takeaway is that **SGD** is a resource-efficient method for training mod
 In the next step, the video also talks about how to improve **SGD** by introducing **Mini-batch SGD**, which helps reduce noise and balances the advantages and disadvantages of pure SGD.
 
 ---
+### What is Minibatch SGD?
+
+Imagine you’re trying to learn how to shoot basketballs into a hoop. But, instead of taking one shot at a time or trying to shoot all the balls at once, you decide to shoot **in groups**.
+
+Let’s break this analogy down:
+- **Gradient Descent (GD)**: You try shooting all the basketballs (all data points) at once. It’s slow and heavy because you’re handling too many balls at once.
+- **Stochastic Gradient Descent (SGD)**: You shoot one basketball at a time (one data point per iteration). It’s faster but a bit erratic, as each shot depends on just one ball, making your path to improving your aim (global minimum) zigzag.
+  
+Now, you come up with a new method: instead of shooting one ball at a time or all of them at once, you decide to shoot **a small batch** of balls, say 5-10 balls at a time (Minibatch). This allows you to:
+1. **Shoot faster** (fewer steps than shooting all at once),
+2. **Have better control over your aim** (less erratic than shooting one ball at a time).
+
+This is how Minibatch SGD works in machine learning!
+
+### Breaking it Down with Minibatch SGD
+
+1. **Batch Size**: You decide that, instead of shooting one ball at a time or a thousand, you'll shoot **100 balls** (this is your **batch size**). In each round (epoch), you’ll shoot 100 balls, and after every 100 shots, you’ll assess how well you're doing and adjust your aim.
+
+2. **Forward Propagation**: In each round, you take 100 balls and try to shoot them into the hoop. Here, you're using your knowledge (your model) to predict where the balls should go.
+   
+3. **Backward Propagation**: After shooting, you check how many balls went in (how accurate your model was). Based on this, you adjust your aim (the weights in your model) to improve the next round of shots.
+
+4. **Iterations and Epochs**: 
+   - If you have 10,000 balls (data points) and you shoot **100 balls at a time**, you will need 100 rounds (iterations) to finish one full practice session (epoch).
+
+### Why Use Minibatch?
+
+- **Efficiency**: If you shoot all 10,000 balls at once (like in **Gradient Descent**), it might be too slow and exhausting. If you shoot one ball at a time (like in **SGD**), you get faster feedback, but it's all over the place, and it takes time to improve your aim.
+  
+- By using **Minibatch**, you get a **good balance** between **speed** and **accuracy**. It reduces the zigzag effect (noise) seen in SGD and makes your path smoother, helping you reach your goal faster.
+
+### Real-Time Example
+
+Let’s take an example where you have a **big warehouse** with **lots of items** that need to be sorted. You need to train a machine learning model to predict the best way to sort these items.
+
+1. **Gradient Descent (GD)**: You’d try to sort all the items at once. It’s slow and inefficient because you're trying to do everything in one go.
+2. **Stochastic Gradient Descent (SGD)**: You sort one item at a time. It’s faster, but it’s **chaotic**—you might sort an item one way, then realize it’s wrong, then adjust it, but it takes a lot of time to improve.
+3. **Minibatch SGD**: You decide to sort **small batches** of items, say 50 items at a time. You look at the batch of 50, make adjustments based on that, and continue sorting. This is **faster and more stable** than just one item at a time.
+
+### Key Takeaways
+
+- **Minibatch SGD** helps you **work faster** while making sure you're moving in the right direction.
+- It balances between **speed** (shooting fewer balls at a time) and **accuracy** (fewer zigzags when adjusting your aim).
+- It’s more efficient than just using **SGD** (one ball at a time) and can handle larger datasets without overwhelming your computer's memory.
+
+In short, **Minibatch SGD** is like shooting batches of basketballs rather than just one ball or all the balls at once. It helps you improve your aim (model) faster while keeping the path to improvement smoother.
+
+---
+Let’s break this transcript down into a simple explanation with an easy-to-understand, real-life analogy and simplified formulas.
+
+---
+
+### **What’s the problem with Mini-batch SGD?**
+Mini-batch Stochastic Gradient Descent (SGD) helps reduce noise in optimization, but it’s not perfect. Even with mini-batches, the updates to our weights (the parameters we’re trying to optimize) can still zigzag a lot because of the noise. This slows down how quickly we find the best values for the weights (the minima).
+
+---
+
+### **What’s the solution?**
+We introduce **SGD with Momentum** to **smooth out the zigzagging** and speed up convergence. Think of it like riding a bike downhill:
+- **Without momentum**, you’re pedaling but hitting every bump along the way.
+- **With momentum**, it’s like adding suspension to your bike. It absorbs the bumps (noise) so you can ride smoothly and get downhill faster.
+
+---
+
+### **How does momentum work?**
+Momentum uses a concept called **Exponential Weighted Average** to smooth the updates over time. It prioritizes past updates to guide the current step more smoothly.
+
+---
+
+### **What is Exponential Weighted Average (EWA)?**
+Imagine you’re keeping track of a running score in a game. Instead of just looking at the last round’s score, you weigh all previous rounds. But you give more importance to recent scores and less importance to older ones.
+
+---
+
+### **Real-life analogy for EWA:**
+Suppose you’re monitoring your daily exercise performance:
+- Day 1: You ran **2 km**.
+- Day 2: You ran **3 km**.
+- Day 3: You ran **4 km**.
+  
+If you want a smooth average of your performance, you don’t just take the plain average. Instead:
+- You give more importance to today’s performance.
+- You still consider yesterday and the day before, but with decreasing importance.
+
+We use a parameter called **beta** to control this:
+- A high beta (e.g., 0.95) means you care **more about past values**.
+- A low beta (e.g., 0.5) means you care **more about current values**.
+
+---
+
+### **Formula for EWA:**
+![image](https://github.com/user-attachments/assets/5b6b9b3f-bb13-4c50-96fd-b818ae3ca610)
+
+This smoothes out your performance over days.
+
+---
+
+### **How does this apply to weights?**
+![image](https://github.com/user-attachments/assets/7b67fcf1-b80e-48f8-a7c5-9afdc0608974)
+
+
+---
+
+### **What does this do?**
+- Reduces **zigzagging** in noisy gradients.
+- Helps weights move **faster** toward the minimum.
+- Results in smoother and faster optimization.
+
+---
+
+### **Key Advantages of SGD with Momentum:**
+1. **Noise Reduction**: Reduces the random jumps caused by noisy gradients.
+2. **Faster Convergence**: Smooth gradients lead to quicker optimization.
+
+---
+
+### **Imagine a ball rolling down a hill:**
+- **Without momentum**: The ball bumps around on small rocks and slows down.
+- **With momentum**: The ball builds speed and rolls over small bumps smoothly, reaching the bottom faster.
+
+---
+
+### **What is Adagrad Optimizer?**
+- **Adagrad** stands for **Adaptive Gradient Descent**.
+- It is a type of optimization technique used in machine learning to update weights during training.
+- The special thing about Adagrad is that it changes (adapts) the **learning rate** dynamically as training progresses.
+
+---
+
+### **Recap: What is the Learning Rate?**
+The **learning rate** controls how big the steps are when adjusting the weights. 
+
+- **Too small learning rate**: Training takes a long time to reach the best result.
+- **Too big learning rate**: Training might overshoot and never find the best result.
+
+Traditionally, the learning rate is fixed (e.g., 0.01 or 0.001), but this isn’t always ideal for all problems.
+
+---
+
+### **Why Do We Need a Dynamic Learning Rate?**
+Imagine you're walking downhill to reach a valley (global minima). Initially:
+- You’re far from the valley, so you want to take **big steps** to move quickly.
+- As you get closer to the valley, you need to take **smaller steps** to avoid overshooting and stop exactly at the lowest point.
+
+Adagrad helps by:
+1. Starting with **big steps** (large learning rate).
+2. Gradually reducing the step size (small learning rate) as you approach the global minima.
+
+---
+
+### **How Does Adagrad Work?**
+Adagrad adjusts the learning rate using a mathematical formula.
+
+![image](https://github.com/user-attachments/assets/4eb09a45-346f-40b3-bf95-17b35f3b39f3)
+
+
+![image](https://github.com/user-attachments/assets/e8c1714e-89ef-4cbf-9977-507abb3d29ff)
+
+---
+
+### **Example**
+![image](https://github.com/user-attachments/assets/cff26947-cea6-4a7b-9d79-7a94ad669aa5)
+
+#### Step-by-step:
+1. **First step**:
+   - Gradient: Large, because you are far from the minimum.
+   - Learning rate: Big step to move quickly.
+
+2. **Second step**:
+   - Gradient: Smaller, because you’re closer to the minimum.
+   - Learning rate: Adjusts and becomes smaller.
+
+3. **Further steps**:
+   - As you approach (x = 0), the gradient gets smaller,αt increases, and the learning rate decreases further.
+
+#### Outcome:
+- Initially: Faster movement (large steps).
+- Near the minimum: Slower movement (small steps), preventing overshooting.
+
+---
+
+### **Advantages of Adagrad**
+1. **Dynamic Learning Rate**:
+   - Speeds up training when far from the goal.
+   - Slows down as it nears the optimum.
+2. **Automatically adapts** for each weight based on past gradients.
+
+---
+
+### **Disadvantage of Adagrad**
+- In very deep networks or long training,αt(the cumulative sum) becomes very large.
+  - This makes the learning rate \(\eta'\) too small.
+  - When the learning rate is too small, weight updates almost stop, and training can stagnate.
+
+For example:
+- If the learning rate becomes so tiny (like \(0.000001\)), it’s almost like no weight updates are happening.
+
+---
+
+### **Summary**
+- Adagrad is great for dynamically adjusting the learning rate.
+- It’s especially useful for sparse data (e.g., text or recommendation systems).
+- However, it can suffer from a very small learning rate over time. Later optimizers like **Adadelta** and **RMSProp** improve on this limitation.
+
+---
+
+### **Problem with Adagrad**
+- **Walking Downhill (Adagrad):**  
+  In Adagrad, your steps start big, but they get smaller and smaller as you go down.  
+  - **Why?** Because Adagrad keeps adding the square of your previous steps (let's call it "effort") and divides the step size by it. Over time, this "effort" becomes so big that your steps become **tiny**—so tiny that you can’t move forward!  
+  - Result? You get stuck before you reach the bottom of the hill.
+
+---
+
+### **Fixing the Problem: Adadelta and RMSProp**
+Now, let’s improve this so that your steps never become too small:  
+
+1. **Smoothing Your Effort**  
+   Instead of just adding all your past efforts (like Adagrad), **Adadelta and RMSProp** smooth them out.  
+   - Think of it like this:  
+     - You give **more importance** to recent efforts.  
+     - Older efforts fade away slowly (so they don’t build up too much).  
+   - This keeps your effort controlled and stops it from becoming too large.
+
+   **How?** By using a formula called the "exponential weighted average" (EWA). But you don’t need to worry about the math—it just means you’re balancing between past and recent efforts.
+
+2. **Dynamic Steps (Learning Rate)**  
+   Your step size adjusts automatically:  
+   - At the top of the hill, your steps are **big** so you move faster.  
+   - As you get closer to the bottom, your steps become **smaller** so you don’t overshoot the goal.
+
+---
+
+### **Simple Walking Example**
+Let’s compare:
+
+| **Optimizer** | **Step Behavior** | **What Happens?** |
+|---------------|-------------------|-------------------|
+| **Adagrad**   | Steps get smaller and smaller. | You stop before reaching the bottom. |
+| **Adadelta/RMSProp** | Steps adjust smoothly (big at first, small near the bottom). | You reach the bottom efficiently. |
+
+---
+
+### **Why Two Names: Adadelta vs. RMSProp?**
+- Both do the same job of **controlling step size** and **smoothing past efforts**.  
+- They are like slightly different recipes for the same dish:  
+  - Adadelta adds a tiny tweak to how step size is calculated.
+  - RMSProp uses a simpler approach, but both work in a similar way.
+
+---
+
+### **Final Thought**
+Adadelta and RMSProp are just smarter ways to take steps when walking downhill.  
+- They **don’t let your steps shrink too much** (like Adagrad).  
+- They make sure your steps are just the right size to reach the bottom smoothly.  
+
+---
+
+
+### **Recap: The Problem with Adagrad**
+![image](https://github.com/user-attachments/assets/538b4ee5-c8bd-4cfd-a92a-2b3754d907ee)
+
+
+---
+
+### **Adadelta and RMSProp: The Fix**
+To solve this issue, **Adadelta** and **RMSProp** replace \(\alpha_t\) with something more stable: **SDW** (Smoothed Decay of Gradients).
+
+---
+
+#### **What’s New in Adadelta and RMSProp?**
+![image](https://github.com/user-attachments/assets/c5764a3c-a2cd-4a81-8cb6-2a25d3dd368d)
+
+---
+
+### **How Does Exponential Weighted Average Help?**
+EWA smooths out sudden spikes in gradient values. Instead of letting \(\alpha_t\) grow uncontrollably, SDW limits its growth by giving more weight to recent gradients while keeping the history of past gradients.
+
+![image](https://github.com/user-attachments/assets/03d8b8c9-7aeb-4544-aa07-fb29d007c8ae)
+
+
+---
+
+### **Key Differences Between Adadelta and RMSProp**
+- Both use the same idea of smoothing with EWA.
+- Their main difference is in how they normalize or adjust SDW, but the working principle is very similar.
+
+---
+
+### **Advantages of Adadelta and RMSProp**
+1. **Dynamic Learning Rate**:
+   - Adapts as training progresses.
+   - Prevents learning rate from shrinking too much.
+
+2. **Stabilized Updates**:
+   - Weight updates don’t vanish (no stagnation).
+   - Smooth learning rate adjustments.
+
+3. **Efficient in Deep Networks**:
+   - Works better than Adagrad for complex models.
+
+---
+
+![image](https://github.com/user-attachments/assets/f2891c24-31e0-45c4-a7d5-967bfcfd19d4)
+
+---
+
+### **Simplified Example**
+#### Scenario: Walking downhill to a valley
+- In Adagrad:
+  - The steps become so small over time that you stop walking (learning stalls).
+- In RMSProp/Adadelta:
+  - Each step is adjusted smoothly using the exponential weighted average.
+  - The steps slow down but don’t stop completely, ensuring progress towards the valley.
+
+---
+
+### **Disadvantages**
+- While Adadelta and RMSProp fix the shrinking learning rate problem, they still:
+  - Lack **momentum** to speed up convergence.
+  - Don’t handle minibatch optimization as efficiently.
+
+---
+
+### **What’s Next?**
+- **Adam Optimizer**:
+  - Combines the best features of RMSProp, Adadelta, and momentum.
+  - Most widely used optimizer in practice.
+
+---
+
+### **Summary**
+- Adadelta and RMSProp improve on Adagrad by using **exponential weighted averages (EWA)** to control the learning rate.
+- They ensure that the learning rate stays dynamic without shrinking too much.
+- These optimizers are great for training deep neural networks and are a step closer to the best optimizer, **Adam**.
+
+---
+
+
+
+### **Step 1: Initialization**  
+![image](https://github.com/user-attachments/assets/031b6777-3501-485d-8c5e-9bcca391df1e)
+
+
+### **Step 2: Update Rules**
+#### Formula Breakdown:
+![image](https://github.com/user-attachments/assets/5c2bcb47-55e6-45f5-8efb-4293840839dd)
+
+---
+
+![image](https://github.com/user-attachments/assets/11d6b881-12ad-4cac-8bc0-31752ce777ac)
+
+
+---
+
+![image](https://github.com/user-attachments/assets/aab05900-713a-43f4-a00f-5dcb2eb45bff)
+
+
+---
+
+### **Explanation with Example**  
+#### Scenario:  
+Imagine you’re training a machine learning model and the loss (error) function looks like a bumpy terrain. Adam Optimizer helps you find the lowest point (global minimum) using these steps:
+
+![image](https://github.com/user-attachments/assets/d995fa65-de8b-4b0f-8e25-dd3470c64f4f)
+
+---
+
+### **Key Features of Adam with Formulas**
+![image](https://github.com/user-attachments/assets/2ccd931c-1c63-4076-a989-75b5f38c95c5)
+
+
+---
+
+### **Advantages**
+- **Fast Convergence**: Combines momentum and step scaling for efficiency.  
+- **Works Well on Noisy Data**: Handles irregular updates smoothly.  
+- **Widely Used**: Default choice for most deep learning models.  
+
+---
+
+### **Example in Practice (Simplified)**
+![image](https://github.com/user-attachments/assets/9f684414-7c8e-491f-a34a-bc7980d6abca)
+
+
+---
